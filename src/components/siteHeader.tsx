@@ -30,7 +30,8 @@ export function SiteHeader({
 
       <Link
         href={actionHref}
-        className="rounded-full border border-transparent bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-white shadow-token-md transition hover:-translate-y-0.5 hover:bg-[var(--accent-strong)]"
+        className="rounded-full border border-[var(--accent-strong)] bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold shadow-token-md transition hover:-translate-y-0.5 hover:bg-[var(--accent-strong)] hover:shadow-[0_16px_36px_-26px_rgba(0,0,0,0.45)]"
+        style={{ color: "var(--accent-foreground)" }}
       >
         {actionLabel}
       </Link>
