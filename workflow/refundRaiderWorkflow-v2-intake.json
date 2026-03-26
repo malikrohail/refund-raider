@@ -1,0 +1,114 @@
+{
+  "edges": {
+    "start_to_collect": {
+      "source": "start_node",
+      "target": "collect_problem",
+      "forward_condition": {
+        "label": null,
+        "type": "unconditional"
+      },
+      "backward_condition": null
+    },
+    "collect_to_inbox": {
+      "source": "collect_problem",
+      "target": "inbox_context",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The user mentioned a receipt, billing email, renewal, or support thread that should be searched in Gmail"
+      },
+      "backward_condition": null
+    },
+    "collect_to_create": {
+      "source": "collect_problem",
+      "target": "create_case_node",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The merchant name and issue summary are clear enough to open the case now"
+      },
+      "backward_condition": null
+    },
+    "inbox_to_create": {
+      "source": "inbox_context",
+      "target": "create_case_node",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The Gmail result has been selected and the case can now be created"
+      },
+      "backward_condition": null
+    },
+    "create_to_end": {
+      "source": "create_case_node",
+      "target": "end",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The case was created and the user understands where the app is taking them"
+      },
+      "backward_condition": null
+    }
+  },
+  "nodes": {
+    "start_node": {
+      "type": "start",
+      "position": { "x": 0, "y": 0 },
+      "edge_order": ["start_to_collect"]
+    },
+    "collect_problem": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Collect the user's problem in the fewest turns possible. Ask only for missing facts and keep the conversation voice-first.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": { "x": 0, "y": 220 },
+      "edge_order": ["collect_to_inbox", "collect_to_create"],
+      "label": "Collect Problem"
+    },
+    "inbox_context": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Search Gmail only when needed, then select the message that gives the cleanest order or billing context.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": { "x": 0, "y": 460 },
+      "edge_order": ["inbox_to_create"],
+      "label": "Inbox Context"
+    },
+    "create_case_node": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Create the case once the intake is complete enough, then clearly tell the user what was captured and what page comes next.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": { "x": 0, "y": 700 },
+      "edge_order": ["create_to_end"],
+      "label": "Create Case"
+    },
+    "end": {
+      "type": "end",
+      "position": { "x": 0, "y": 920 },
+      "edge_order": []
+    }
+  },
+  "prevent_subagent_loops": false
+}

@@ -1,0 +1,17 @@
+flowchart TD
+  start_node(["Start"])
+  greeting["Subagent: Identify Refund Problem"]
+  qualification["Subagent: Evidence & Qualification"]
+  channel["Subagent: Choose Resolution Channel"]
+  email_resolution["Subagent: Draft & Send Email"]
+  manual_resolution["Subagent: Manual Support Path"]
+  resolve["Subagent: Resolve & Next Steps"]
+  end(["End"])
+  start_node --> greeting
+  greeting -->|"The caller has a damaged, wrong, missing, or return issue and enough detail to research it"| qualification
+  qualification -->|"The case has enough evidence to decide whether email is viable or a manual path is required"| channel
+  channel -->|"A support email exists and email is the strongest path"| email_resolution
+  channel -->|"Email is unavailable or the merchant requires a form, account flow, or phone support"| manual_resolution
+  email_resolution -->|"The draft is created or sent and the caller understands the next step"| resolve
+  manual_resolution -->|"The caller understands the exact manual path and fallback plan"| resolve
+  resolve -->|"The caller has no more questions and is satisfied"| end

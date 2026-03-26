@@ -1,0 +1,30 @@
+# v01-clean-winner Remotion scene plan
+
+- `scene-01-hook`
+  - 0-5s
+  - final case state
+  - stitched narration
+- `scene-02-problem`
+  - 5-20s
+  - proof + complaint
+  - stitched narration
+- `scene-03-firecrawl`
+  - 20-40s
+  - evidence cards, quote, deadline
+  - stitched narration
+- `scene-04-elevenlabs`
+  - 40-60s
+  - short live advocate clip
+  - live or cleaned captured audio
+- `scene-05-draft`
+  - 60-80s
+  - draft pane
+  - stitched narration
+- `scene-06-send`
+  - 80-86s
+  - approve/send
+  - narration tail
+- `scene-07-end-card`
+  - 86-90s
+  - timeline end state
+  - thesis line

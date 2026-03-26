@@ -1,0 +1,26 @@
+# v05-policy-detective Remotion scene plan
+
+- `scene-01-hook`
+  - 0-8s
+  - skeptical opener
+  - stitched narration
+- `scene-02-problem`
+  - 8-22s
+  - problem input state
+  - narration
+- `scene-03-firecrawl`
+  - 22-45s
+  - evidence quote + deadline
+  - narration
+- `scene-04-elevenlabs`
+  - 45-62s
+  - plain-English summary
+  - captured or bridged audio
+- `scene-05-draft-send`
+  - 62-84s
+  - draft + send
+  - narration
+- `scene-06-end-card`
+  - 84-90s
+  - proof-to-action thesis
+  - final line

@@ -1,0 +1,6 @@
+graph TD
+  start([Start]) --> collect[Collect Problem]
+  collect -->|Needs receipt or billing context| inbox[Inbox Context]
+  collect -->|Enough detail to proceed| create[Create Case]
+  inbox --> create
+  create --> end([End])

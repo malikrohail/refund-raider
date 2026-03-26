@@ -1,0 +1,253 @@
+{
+  "edges": {
+    "start_to_intake": {
+      "source": "start_node",
+      "target": "triage_case",
+      "forward_condition": { "label": null, "type": "unconditional" },
+      "backward_condition": null
+    },
+    "intake_to_research": {
+      "source": "triage_case",
+      "target": "research_case",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The case has enough detail to gather evidence and support paths"
+      },
+      "backward_condition": null
+    },
+    "research_to_deep_discovery": {
+      "source": "research_case",
+      "target": "deep_discovery",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The case still needs deeper public-site discovery, support-path extraction, or crawl-based context"
+      },
+      "backward_condition": null
+    },
+    "research_to_plan": {
+      "source": "research_case",
+      "target": "plan_case",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The case has enough evidence to build the next action plan"
+      },
+      "backward_condition": null
+    },
+    "deep_discovery_to_plan": {
+      "source": "deep_discovery",
+      "target": "plan_case",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The deeper Firecrawl output is enough to choose the next channel and action"
+      },
+      "backward_condition": null
+    },
+    "plan_to_browser": {
+      "source": "plan_case",
+      "target": "browser_path",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The strongest next step requires browser authority in a support form, account flow, or portal"
+      },
+      "backward_condition": null
+    },
+    "plan_to_email": {
+      "source": "plan_case",
+      "target": "email_path",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The strongest next step is still the email path"
+      },
+      "backward_condition": null
+    },
+    "plan_to_manual": {
+      "source": "plan_case",
+      "target": "manual_fallback",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The case cannot execute directly and needs a precise manual or ops fallback"
+      },
+      "backward_condition": null
+    },
+    "browser_to_consent": {
+      "source": "browser_path",
+      "target": "consent_gate",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The browser path is understood well enough to request approval"
+      },
+      "backward_condition": null
+    },
+    "email_to_consent": {
+      "source": "email_path",
+      "target": "consent_gate",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The email path is prepared and ready for approval"
+      },
+      "backward_condition": null
+    },
+    "consent_to_execute": {
+      "source": "consent_gate",
+      "target": "execute_case",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The user approved the sensitive action"
+      },
+      "backward_condition": null
+    },
+    "execute_to_followup": {
+      "source": "execute_case",
+      "target": "followup_and_resolve",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The action ran or the browser/runtime state advanced enough to define the next follow-up"
+      },
+      "backward_condition": null
+    },
+    "manual_to_followup": {
+      "source": "manual_fallback",
+      "target": "followup_and_resolve",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The manual or ops path is clearly explained and a next step exists"
+      },
+      "backward_condition": null
+    },
+    "followup_to_end": {
+      "source": "followup_and_resolve",
+      "target": "end",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The user understands the outcome, follow-up, and fallback"
+      },
+      "backward_condition": null
+    }
+  },
+  "nodes": {
+    "start_node": {
+      "type": "start",
+      "position": { "x": 0, "y": 0 },
+      "edge_order": ["start_to_intake"]
+    },
+    "triage_case": {
+      "type": "override_agent",
+      "label": "Triage Case",
+      "position": { "x": 0, "y": 190 },
+      "edge_order": ["intake_to_research"],
+      "additional_prompt": "Confirm the user's goal, restate the case clearly, and decide whether the conversation needs more evidence or can move into research.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "research_case": {
+      "type": "override_agent",
+      "label": "Research Public Evidence",
+      "position": { "x": 0, "y": 400 },
+      "edge_order": ["research_to_deep_discovery", "research_to_plan"],
+      "additional_prompt": "Use the existing evidence tools first. If the case still needs richer public support-path discovery, defer to Firecrawl extract or crawl.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "deep_discovery": {
+      "type": "override_agent",
+      "label": "Firecrawl Deep Discovery",
+      "position": { "x": 0, "y": 620 },
+      "edge_order": ["deep_discovery_to_plan"],
+      "additional_prompt": "Use Firecrawl extract or crawl to clarify support paths, structured policy details, or contact/escalation options before planning execution.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "plan_case": {
+      "type": "override_agent",
+      "label": "Plan Next Action",
+      "position": { "x": 0, "y": 840 },
+      "edge_order": ["plan_to_browser", "plan_to_email", "plan_to_manual"],
+      "additional_prompt": "Build the next case action plan and choose whether the best path is browser, email, or manual fallback.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "browser_path": {
+      "type": "override_agent",
+      "label": "Browser Runtime Path",
+      "position": { "x": -340, "y": 1060 },
+      "edge_order": ["browser_to_consent"],
+      "additional_prompt": "Use the browser runtime when the support path needs logged-in portal or form actions. Do not claim success until the browser tools confirm it.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "email_path": {
+      "type": "override_agent",
+      "label": "Email Path",
+      "position": { "x": 0, "y": 1060 },
+      "edge_order": ["email_to_consent"],
+      "additional_prompt": "Use the email path when it is the strongest and cleanest path. Prepare the draft before asking for consent.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "manual_fallback": {
+      "type": "override_agent",
+      "label": "Manual Fallback",
+      "position": { "x": 340, "y": 1060 },
+      "edge_order": ["manual_to_followup"],
+      "additional_prompt": "Explain the exact fallback when the path cannot run directly. Be specific about support forms, ops, or next user action.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "consent_gate": {
+      "type": "override_agent",
+      "label": "Request Consent",
+      "position": { "x": 0, "y": 1280 },
+      "edge_order": ["consent_to_execute"],
+      "additional_prompt": "Request consent clearly, then move to execution only after approval.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "execute_case": {
+      "type": "override_agent",
+      "label": "Execute Case Action",
+      "position": { "x": 0, "y": 1500 },
+      "edge_order": ["execute_to_followup"],
+      "additional_prompt": "Execute the planned action, then summarize what changed in the case or browser runtime.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "followup_and_resolve": {
+      "type": "override_agent",
+      "label": "Follow-up & Resolve",
+      "position": { "x": 0, "y": 1720 },
+      "edge_order": ["followup_to_end"],
+      "additional_prompt": "Set the next follow-up, summarize what happened, and leave the user with one clear next step.",
+      "additional_tool_ids": [],
+      "additional_knowledge_base": [],
+      "conversation_config": { "agent": { "prompt": { "built_in_tools": {} } } }
+    },
+    "end": {
+      "type": "end",
+      "position": { "x": 0, "y": 1920 },
+      "edge_order": []
+    }
+  },
+  "prevent_subagent_loops": false
+}

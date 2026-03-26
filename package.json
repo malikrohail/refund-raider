@@ -1,0 +1,49 @@
+{
+  "name": "refund-raider",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "npm run build && playwright test",
+    "test:voice-smoke": "node scripts/run-production-voice-smoke.mjs",
+    "sync:elevenlabs-agent:dry": "node scripts/sync-elevenlabs-agent.mjs --dry-run",
+    "sync:elevenlabs-agent": "node scripts/sync-elevenlabs-agent.mjs",
+    "inspect:elevenlabs-agent": "node scripts/sync-elevenlabs-agent.mjs --dry-run",
+    "video:capture": "node scripts/capture-submission-assets.mjs",
+    "video:audio": "node scripts/generate-submission-audio.mjs",
+    "video:render": "node scripts/render-submission-videos.mjs"
+  },
+  "dependencies": {
+    "@elevenlabs/client": "^0.16.0",
+    "@elevenlabs/react": "^0.15.0",
+    "@supabase/ssr": "latest",
+    "@supabase/supabase-js": "latest",
+    "inngest": "latest",
+    "next": "latest",
+    "pdf-parse": "^2.4.5",
+    "postgres": "^3.4.8",
+    "react": "latest",
+    "react-dom": "latest",
+    "resend": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest",
+    "@remotion/cli": "^4.0.440",
+    "@remotion/media": "^4.0.440",
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "remotion": "^4.0.440",
+    "supabase": "^2.83.0",
+    "tailwindcss": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}

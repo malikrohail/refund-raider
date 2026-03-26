@@ -1,0 +1,216 @@
+{
+  "edges": {
+    "start_to_greeting": {
+      "source": "start_node",
+      "target": "greeting",
+      "forward_condition": {
+        "label": null,
+        "type": "unconditional"
+      },
+      "backward_condition": null
+    },
+    "greeting_to_qualification": {
+      "source": "greeting",
+      "target": "qualification",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The caller has a damaged, wrong, missing, or return issue and enough detail to research it"
+      },
+      "backward_condition": null
+    },
+    "qualification_to_channel": {
+      "source": "qualification",
+      "target": "channel",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The case has enough evidence to decide whether email is viable or a manual path is required"
+      },
+      "backward_condition": null
+    },
+    "channel_to_email": {
+      "source": "channel",
+      "target": "email_resolution",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "A support email exists and email is the strongest path"
+      },
+      "backward_condition": null
+    },
+    "channel_to_manual": {
+      "source": "channel",
+      "target": "manual_resolution",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "Email is unavailable or the merchant requires a form, account flow, or phone support"
+      },
+      "backward_condition": null
+    },
+    "email_to_resolve": {
+      "source": "email_resolution",
+      "target": "resolve",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The draft is created or sent and the caller understands the next step"
+      },
+      "backward_condition": null
+    },
+    "manual_to_resolve": {
+      "source": "manual_resolution",
+      "target": "resolve",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The caller understands the exact manual path and fallback plan"
+      },
+      "backward_condition": null
+    },
+    "resolve_to_end": {
+      "source": "resolve",
+      "target": "end",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The caller has no more questions and is satisfied"
+      },
+      "backward_condition": null
+    }
+  },
+  "nodes": {
+    "start_node": {
+      "type": "start",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "edge_order": ["start_to_greeting"]
+    },
+    "greeting": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Identify whether the caller has a real damaged, wrong, missing, or return issue. Gather the merchant, issue type, and whether proof or order evidence exists before moving on.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": 0,
+        "y": 200
+      },
+      "edge_order": ["greeting_to_qualification"],
+      "label": "Identify Refund Problem"
+    },
+    "qualification": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Explain whether the caller likely qualifies, what visible evidence matters, and what the strongest next step is. Keep the answer grounded and practical, not speculative.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": 0,
+        "y": 380
+      },
+      "edge_order": ["qualification_to_channel"],
+      "label": "Evidence & Qualification"
+    },
+    "channel": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Choose the best medium for action. Prefer support email when it exists and is the strongest path. Use manual fallback when the merchant requires a support form, account flow, or phone support.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": 0,
+        "y": 560
+      },
+      "edge_order": ["channel_to_email", "channel_to_manual"],
+      "label": "Choose Resolution Channel"
+    },
+    "email_resolution": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Guide the user through draft generation, draft review, and send. Make the email-first path feel like the fastest, strongest move, but do not send before approval.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": -320,
+        "y": 760
+      },
+      "edge_order": ["email_to_resolve"],
+      "label": "Draft & Send Email"
+    },
+    "manual_resolution": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Explain the manual next step when email is not the right medium. Be explicit about whether the user should use a support form, account flow, or phone path and what to do next.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": 320,
+        "y": 760
+      },
+      "edge_order": ["manual_to_resolve"],
+      "label": "Manual Support Path"
+    },
+    "resolve": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "Summarize the verdict, the evidence used, what was done, what happens next, and the fallback plan. End with one concrete next step and no ambiguity.",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": 0,
+        "y": 960
+      },
+      "edge_order": ["resolve_to_end"],
+      "label": "Resolve & Next Steps"
+    },
+    "end": {
+      "type": "end",
+      "position": {
+        "x": 0,
+        "y": 1140
+      },
+      "edge_order": []
+    }
+  },
+  "prevent_subagent_loops": false
+}

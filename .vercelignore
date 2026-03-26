@@ -1,0 +1,6 @@
+.next
+.next.bak.*
+node_modules
+test-results
+.data
+qa

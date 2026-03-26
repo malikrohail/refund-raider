@@ -1,0 +1,4 @@
+Order #12345
+Merchant: Best Buy
+Issue: item arrived damaged
+Purchase date: 2026-03-18

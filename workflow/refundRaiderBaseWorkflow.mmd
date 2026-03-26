@@ -1,0 +1,17 @@
+flowchart TD
+  start_node(["Start"])
+  greeting["Subagent: Welcome & Identify Need"]
+  shopping["Subagent: Product Search & Recommendations"]
+  order_support["Subagent: Order Status & Tracking"]
+  returns["Subagent: Returns & Exchanges"]
+  resolve["Subagent: Resolve & Farewell"]
+  end(["End"])
+  start_node --> greeting
+  greeting -->|"The caller wants to find or browse products"| shopping
+  greeting -->|"The caller wants to check on an existing order or delivery"| order_support
+  greeting -->|"The caller wants to return or exchange an item"| returns
+  shopping -->|"The caller has found what they want or decided not to purchase"| resolve
+  order_support -->|"The order status has been shared and the caller's question is answered"| resolve
+  order_support -->|"After checking the order, the caller wants to initiate a return or exchange"| returns
+  returns -->|"The return or exchange has been initiated and the caller understands next steps"| resolve
+  resolve -->|"The caller has no more questions and is satisfied"| end

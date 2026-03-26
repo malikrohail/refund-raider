@@ -1,0 +1,26 @@
+# v03-voice-magic Remotion scene plan
+
+- `scene-01-hook`
+  - 0-6s
+  - live user prompt
+  - live captured audio
+- `scene-02-follow-up`
+  - 6-20s
+  - one follow-up question
+  - live captured audio
+- `scene-03-firecrawl`
+  - 20-40s
+  - evidence appears
+  - narration bridge
+- `scene-04-verdict`
+  - 40-60s
+  - advocate summary
+  - live captured audio
+- `scene-05-draft-send`
+  - 60-84s
+  - draft + send
+  - narration bridge
+- `scene-06-end-card`
+  - 84-90s
+  - timeline + thesis
+  - stitched narration

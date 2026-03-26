@@ -1,0 +1,30 @@
+# v04-challenge-format Remotion scene plan
+
+- `scene-01-hook`
+  - 0-5s
+  - timer + challenge text
+  - fast narration
+- `scene-02-problem`
+  - 5-15s
+  - merchant/problem/proof
+  - fast narration
+- `scene-03-firecrawl`
+  - 15-35s
+  - evidence stack
+  - fast narration
+- `scene-04-elevenlabs`
+  - 35-48s
+  - one short live clip
+  - captured audio
+- `scene-05-draft`
+  - 48-60s
+  - draft pane
+  - narration
+- `scene-06-send`
+  - 60-70s
+  - send state
+  - narration
+- `scene-07-recap`
+  - 70-90s
+  - timer stop + proof recap
+  - thesis line

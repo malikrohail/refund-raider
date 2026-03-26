@@ -1,0 +1,21 @@
+# v01-clean-winner shot list
+
+- `shot-01-hook`
+  - show the final case page state first
+  - make the verdict readable immediately
+- `shot-02-problem`
+  - show the damaged item or proof artifact
+  - keep the complaint to one sentence
+- `shot-03-firecrawl`
+  - show evidence cards, quote, and deadline
+  - keep source visibility obvious
+- `shot-04-elevenlabs`
+  - capture one short, useful advocate explanation
+- `shot-05-draft`
+  - show the generated refund email
+  - keep the ask legible
+- `shot-06-send`
+  - show approve and send clearly
+- `shot-07-end-card`
+  - show the timeline with sent state
+  - land on the thesis, not the UI chrome

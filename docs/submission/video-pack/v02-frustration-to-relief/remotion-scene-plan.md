@@ -1,0 +1,26 @@
+# v02-frustration-to-relief Remotion scene plan
+
+- `scene-01-hook`
+  - 0-8s
+  - broken item + support chaos
+  - emotional narration
+- `scene-02-shift`
+  - 8-15s
+  - hard cut into Refund Raider
+  - narration bridge
+- `scene-03-firecrawl`
+  - 15-35s
+  - evidence state
+  - narration
+- `scene-04-elevenlabs`
+  - 35-55s
+  - calm explanation clip
+  - live or cleaned captured audio
+- `scene-05-draft-send`
+  - 55-82s
+  - draft + send
+  - narration
+- `scene-06-end-card`
+  - 82-90s
+  - resolved end frame
+  - thesis line

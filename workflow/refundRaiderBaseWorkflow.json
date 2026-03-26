@@ -1,0 +1,207 @@
+{
+  "edges": {
+    "start_to_greeting": {
+      "source": "start_node",
+      "target": "greeting",
+      "forward_condition": {
+        "label": null,
+        "type": "unconditional"
+      },
+      "backward_condition": null
+    },
+    "greeting_to_shopping": {
+      "source": "greeting",
+      "target": "shopping",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The caller wants to find or browse products"
+      },
+      "backward_condition": null
+    },
+    "greeting_to_order": {
+      "source": "greeting",
+      "target": "order_support",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The caller wants to check on an existing order or delivery"
+      },
+      "backward_condition": null
+    },
+    "greeting_to_returns": {
+      "source": "greeting",
+      "target": "returns",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The caller wants to return or exchange an item"
+      },
+      "backward_condition": null
+    },
+    "shopping_to_resolve": {
+      "source": "shopping",
+      "target": "resolve",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The caller has found what they want or decided not to purchase"
+      },
+      "backward_condition": null
+    },
+    "order_to_resolve": {
+      "source": "order_support",
+      "target": "resolve",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The order status has been shared and the caller's question is answered"
+      },
+      "backward_condition": null
+    },
+    "order_to_returns": {
+      "source": "order_support",
+      "target": "returns",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "After checking the order, the caller wants to initiate a return or exchange"
+      },
+      "backward_condition": null
+    },
+    "returns_to_resolve": {
+      "source": "returns",
+      "target": "resolve",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The return or exchange has been initiated and the caller understands next steps"
+      },
+      "backward_condition": null
+    },
+    "resolve_to_end": {
+      "source": "resolve",
+      "target": "end",
+      "forward_condition": {
+        "label": null,
+        "type": "llm",
+        "condition": "The caller has no more questions and is satisfied"
+      },
+      "backward_condition": null
+    }
+  },
+  "nodes": {
+    "start_node": {
+      "type": "start",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "edge_order": ["start_to_greeting"]
+    },
+    "greeting": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": 0,
+        "y": 200
+      },
+      "edge_order": ["greeting_to_shopping", "greeting_to_order", "greeting_to_returns"],
+      "label": "Welcome & Identify Need"
+    },
+    "shopping": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": -502,
+        "y": 402
+      },
+      "edge_order": ["shopping_to_resolve"],
+      "label": "Product Search & Recommendations"
+    },
+    "order_support": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": 1,
+        "y": 400
+      },
+      "edge_order": ["order_to_resolve", "order_to_returns"],
+      "label": "Order Status & Tracking"
+    },
+    "returns": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": 566,
+        "y": 600
+      },
+      "edge_order": ["returns_to_resolve"],
+      "label": "Returns & Exchanges"
+    },
+    "resolve": {
+      "conversation_config": {
+        "agent": {
+          "prompt": {
+            "built_in_tools": {}
+          }
+        }
+      },
+      "additional_prompt": "",
+      "additional_knowledge_base": [],
+      "additional_tool_ids": [],
+      "type": "override_agent",
+      "position": {
+        "x": -1,
+        "y": 721
+      },
+      "edge_order": ["resolve_to_end"],
+      "label": "Resolve & Farewell"
+    },
+    "end": {
+      "type": "end",
+      "position": {
+        "x": 0,
+        "y": 888
+      },
+      "edge_order": []
+    }
+  },
+  "prevent_subagent_loops": false
+}

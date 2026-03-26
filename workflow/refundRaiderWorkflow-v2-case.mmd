@@ -1,0 +1,15 @@
+flowchart TD
+  start([Start]) --> triage[Triage Case]
+  triage --> research[Research Public Evidence]
+  research -->|Needs deeper public discovery| deep[Firecrawl Deep Discovery]
+  research -->|Enough evidence to plan| plan[Plan Next Action]
+  deep --> plan
+  plan -->|Portal or support form| browser[Browser Runtime Path]
+  plan -->|Email is strongest| email[Email Path]
+  plan -->|Cannot run directly| manual[Manual Fallback]
+  browser --> consent[Request Consent]
+  email --> consent
+  consent --> execute[Execute Case Action]
+  execute --> followup[Follow-up & Resolve]
+  manual --> followup
+  followup --> end([End])
