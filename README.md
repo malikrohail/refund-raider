@@ -204,15 +204,3 @@ The intended demo story is simple:
 
 The strongest story is not “general automation platform.”
 It is “this app gets your refund case into motion fast, with real evidence.”
-
-## Related Docs
-
-- `REFUND_RAIDER_FINAL_PLAN.md`
-- `REFUND_RAIDER_ARCHITECTURE.md`
-- `HACKATHON_TICKETS.md`
-- `docs/submission/`
-
-## Status
-
-Refund Raider is an active hackathon build, not a polished production SaaS.
-The repo includes both live-service integrations and demo-safe fallbacks so the project can still be run and shown even when every provider is not wired up.
